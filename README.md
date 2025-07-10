@@ -4,7 +4,7 @@ A PDF Generator. Converts html templates to pdf.
 It Generates the html by setting up a headless browser
 
 ## Sample
-![architecture](test.pdf)
+![architecture](PDFService.API/test.pdf)
 
 ## Setup
 If you are running the application for first you would need install Browsers.
