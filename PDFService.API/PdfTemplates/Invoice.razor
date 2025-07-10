@@ -1,0 +1,61 @@
+﻿@using PDFService.API.Models
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Invoice</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .total { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Invoice</h1>
+    <p><strong>Invoice #: </strong>@InvoiceNumber</p>
+    <p><strong>Date: </strong>@Date.ToShortDateString()</p>
+    <p><strong>Customer: </strong>@CustomerName</p>
+    <p><strong>Phone Number: </strong>@Phone</p>
+    <p><strong>Address: </strong>@Address</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Unit Price</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Items)
+            {
+                <tr>
+                    <td>@item.Description</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.UnitPrice.ToString("C")</td>
+                    <td>@(item.Quantity * item.UnitPrice).ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="total">Total</td>
+                <td class="total">@Items.Sum(i => i.Quantity * i.UnitPrice).ToString("C")</td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>
+
+@code {
+    [Parameter] public InvoiceItem[]? Items { get; set; }
+    [Parameter] public string? InvoiceNumber { get; set; }
+    [Parameter] public string? CustomerName { get; set; }
+    [Parameter] public DateTime Date { get; set; }
+    [Parameter] public string? Phone { get; set; }
+    [Parameter] public string? Address { get; set; }
+}
